@@ -13,7 +13,7 @@ import {
   virtualCategoriesTable,
   manualProductsTable,
   manualOrdersTable,
-} from "@workspace/db";
+} from "../db.js";
 import { setStep, getStep } from "../state.js";
 import { callAiSupport, clearAiHistory, hasAiKey } from "../ai-support.js";
 import {
