@@ -1,10 +1,12 @@
 const { Telegraf } = require("telegraf");
+const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-const { registerAdmin, registerAdminTextHandlers, startPingScheduler } = require("../workspace/admin.js");
+// هاد المسار رح يشتغل 100% وين ما كان Render
+const { registerAdmin, registerAdminTextHandlers, startPingScheduler } = require(path.join(__dirname, "../workspace/admin.js"));
 
 registerAdmin(bot);
 registerAdminTextHandlers(bot);
