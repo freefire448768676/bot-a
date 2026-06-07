@@ -1,6 +1,6 @@
-import { Telegraf } from "telegraf";
-import { registerAdmin, registerAdminTextHandlers, startPingScheduler } from "./workspace/admin.js";
-import dotenv from "dotenv";
+const { Telegraf } = require("telegraf");
+const { registerAdmin, registerAdminTextHandlers, startPingScheduler } = require("./workspace/admin.js");
+require("dotenv").config();
 
 dotenv.config();
 
@@ -10,10 +10,9 @@ registerAdmin(bot);
 registerAdminTextHandlers(bot);
 startPingScheduler(bot);
 
-bot.launch(() => {
-  console.log("البوت شغال على Render ✅");
+bot.launch().then(() => {
+  console.log("البوت اشتغل على Render ✅");
 });
 
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
-import { registerAdmin } from './workspace/admin.js';
