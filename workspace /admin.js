@@ -1,6 +1,7 @@
-import { Telegraf, Markup } from "telegraf";
-import { eq, desc, sql, and } from "drizzle-orm";
-import {
+const { Telegraf, Markup } = require("telegraf");
+const { eq, desc, sql, and } = require("drizzle-orm");
+
+const {
   db,
   depositMethodsTable,
   depositRequestsTable,
@@ -13,10 +14,12 @@ import {
   virtualCategoriesTable,
   manualProductsTable,
   manualOrdersTable,
-} from "../db.js";
-import { setStep, getStep } from "../state.js";
-import { callAiSupport, clearAiHistory, hasAiKey } from "../ai-support.js";
-import {
+} = require("../db.js");
+
+const { setStep, getStep } = require("../state.js");
+const { callAiSupport, clearAiHistory, hasAiKey } = require("../ai-support.js");
+
+const {
   getAdminPassword,
   setSetting,
   getSetting,
@@ -24,12 +27,11 @@ import {
   getSocialMarkupPercent,
   getExchangeRate,
   getBotStatus,
-} from "../settings.js";
-import {
-  ensureUser,
-  ADMIN_USERNAME,
-} from "./start.js";
-import {
+} = require("../settings.js");
+
+const { ensureUser, ADMIN_USERNAME } = require("./start.js");
+
+const {
   getUser,
   setAdmin,
   setStatus,
@@ -39,10 +41,11 @@ import {
   countUsers,
   searchUser,
   markAdminAuthed,
-} from "../users.js";
-import { sendOrEdit, clearInlineKeyboard } from "../tg.js";
-import { invalidateCaches } from "./categories.js";
-import { logger } from "../../lib/logger.js";
+} = require("../users.js");
+
+const { sendOrEdit, clearInlineKeyboard } = require("../tg.js");
+const { invalidateCaches } = require("./categories.js");
+const { logger } = require("../../lib/logger.js");
 
 const ADMIN_USERNAMES_LOWER = (process.env.ADMIN_USERNAME ?? ADMIN_USERNAME)
   .split(",")
@@ -108,7 +111,7 @@ async function showAdminMenu(ctx) {
 // الكود طويل كتير، بس الفكرة: شيلت كل كلمة type و interface و any
 // وغيرت كل الاستيرادات لـ .js
 
-export function registerAdmin(bot) {
+function registerAdmin(bot) {
   bot.command("admin", async (ctx) => {
     await ensureUser(ctx);
     const u = await getUser(ctx.from.id);
@@ -119,7 +122,7 @@ export function registerAdmin(bot) {
   // كل الـ bot.action نفسهن بدون تغيير
 }
 
-export function registerAdminTextHandlers(bot) {
+function registerAdminTextHandlers(bot) {
   bot.on("text", async (ctx, next) => {
     const step = getStep(ctx.from.id);
     const txt = ctx.message.text.trim();
@@ -128,3 +131,5 @@ export function registerAdminTextHandlers(bot) {
     // كل الـ switch case نفسهن
   });
 }
+
+module.exports = { registerAdmin, registerAdminTextHandlers };
