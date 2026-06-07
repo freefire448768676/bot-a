@@ -1,20 +1,34 @@
 const { Telegraf } = require("telegraf");
 const dotenv = require("dotenv");
+const path = require("path");
+const fs = require("fs");
 
 dotenv.config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// هون المسار - اذا workspace بنفس مستوى src استخدم هاد
-let admin;
-try {
-  admin = require("../workspace/admin.js");
-} catch (e) {
-  // اذا ما زبط جرب هاد المسار
-  admin = require("./workspace/admin.js");
+// بدور على admin.js لحاله وين ما كان
+let adminPath;
+const possiblePaths = [
+  path.join(__dirname, "../workspace/admin.js"),
+  path.join(__dirname, "./workspace/admin.js"),
+  path.join(__dirname, "admin.js")
+];
+
+for (const p of possiblePaths) {
+  if (fs.existsSync(p)) {
+    adminPath = p;
+    console.log("لقيت admin.js بـ:", p);
+    break;
+  }
 }
 
-const { registerAdmin, registerAdminTextHandlers, startPingScheduler } = admin;
+if (!adminPath) {
+  console.error("خطأ: ما لقيت ملف admin.js بأي مكان!");
+  process.exit(1);
+}
+
+const { registerAdmin, registerAdminTextHandlers, startPingScheduler } = require(adminPath);
 
 registerAdmin(bot);
 registerAdminTextHandlers(bot);
