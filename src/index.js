@@ -1,12 +1,11 @@
 const { Telegraf } = require("telegraf");
-const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// المسار الصح لملف admin.js اللي جوا src/workspace
-const { registerAdmin, registerAdminTextHandlers, startPingScheduler } = require(path.join(__dirname, "./workspace/admin.js"));
+// require مباشر بدون path.join وبدون __dirname
+const { registerAdmin, registerAdminTextHandlers, startPingScheduler } = require("./workspace/admin.js");
 
 registerAdmin(bot);
 registerAdminTextHandlers(bot);
