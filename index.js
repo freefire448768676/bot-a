@@ -1,18 +1,17 @@
-const { Telegraf } = require("telegraf");
-const { registerAdmin, registerAdminTextHandlers, startPingScheduler } = require("./workspace/admin.js");
-require("dotenv").config();
-
-dotenv.config();
-
-const bot = new Telegraf(process.env.BOT_TOKEN);
-
-registerAdmin(bot);
-registerAdminTextHandlers(bot);
-startPingScheduler(bot);
-
-bot.launch().then(() => {
-  console.log("البوت اشتغل على Render ✅");
-});
-
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
+{
+  "name": "alamaroon-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "telegraf": "^4.12.2",
+    "drizzle-orm": "^0.30.3",
+    "pg": "^8.11.3",
+    "dotenv": "^16.3.1"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
