@@ -4,8 +4,8 @@ dotenv.config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// require مباشر بدون path.join وبدون __dirname
-const { registerAdmin, registerAdminTextHandlers, startPingScheduler } = require("./workspace/admin.js");
+// هون عدلنا المسار - admin.js صار بنفس المجلد
+const { registerAdmin, registerAdminTextHandlers, startPingScheduler } = require("./admin");
 
 registerAdmin(bot);
 registerAdminTextHandlers(bot);
