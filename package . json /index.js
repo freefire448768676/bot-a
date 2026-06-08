@@ -1,0 +1,15 @@
+{
+  "name": "alamaron-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "telegraf": "^4.15.0",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
